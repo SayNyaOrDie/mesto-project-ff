@@ -122,8 +122,6 @@ function handleAddCardSubmit(evt) {
   addCard({ name: placeNameInput.value, link: placeLinkInput.value })
     .then((cardData) => {
       placesList.prepend(renderCard(cardData));
-      addCardForm.reset();
-      clearValidation(addCardForm, validationConfig);
       closeModal(addCardPopup);
     })
     .catch((err) => {

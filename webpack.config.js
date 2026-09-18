@@ -1,5 +1,4 @@
 const path = require('path');
-const fs = require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -18,7 +17,6 @@ module.exports = (env, argv) => {
     },
     devtool: isProduction ? false : 'source-map',
     devServer: {
-      static: path.resolve(__dirname, 'dist'),
       open: true,
       port: 8080,
       hot: true,
@@ -38,13 +36,6 @@ module.exports = (env, argv) => {
       new MiniCssExtractPlugin({
         filename: 'styles.[contenthash].css',
       }),
-      {
-        apply: (compiler) => {
-          compiler.hooks.afterEmit.tap('NoJekyllPlugin', () => {
-            fs.writeFileSync(path.join(__dirname, 'dist', '.nojekyll'), '');
-          });
-        },
-      },
     ],
     module: {
       rules: [

@@ -12,9 +12,12 @@ function hideInputError(inputElement, config) {
   errorElement.textContent = '';
 }
 
+const textFieldPattern = /^[A-Za-zА-Яа-яЁё\s-]+$/u;
+
 function checkInputValidity(inputElement, config) {
-  if (inputElement.validity.patternMismatch) {
-    inputElement.setCustomValidity(inputElement.dataset.errorMessage);
+  if (inputElement.dataset.errorMessage) {
+    const hasInvalidChars = Boolean(inputElement.value) && !textFieldPattern.test(inputElement.value);
+    inputElement.setCustomValidity(hasInvalidChars ? inputElement.dataset.errorMessage : '');
   } else {
     inputElement.setCustomValidity('');
   }
